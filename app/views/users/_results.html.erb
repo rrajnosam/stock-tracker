@@ -1,20 +1,38 @@
-
 <% if @stock %>
-<div class="card col-3 bg-light">
-<div class="card-body row p-2">
-  <p class="card-text font-weight-bold">Symbol: </p> <%= @stock.ticker %>
-</div>
-<div class="card-body row p-2">
-  <p class="card-text font-weight-bold">Name: </p><%= @stock.name %>
-</div>
-<div class="card-body row p-2">
-<p class="card-text font-weight-bold">Last Price: </p><%= @stock.last_price %>
-</div>
+  <div class="card col-5 bg-light">
+    <div class="card-body row p-2">
+      <p class="card-text font-weight-bold">Symbol:
+      </p>
+      <%= @stock.ticker %>
+    </div>
+    <div class="card-body row p-2">
+      <p class="card-text font-weight-bold">Name:
+      </p><%= @stock.name %>
+    </div>
+    <div class="card-body row p-2">
+      <p class="card-text font-weight-bold">Last Price:
+      </p><%= @stock.last_price %>
+    </div>
+    <% if current_user.can_track_stock?(@stock.ticker) %>
+      <div class="card-body row p-2">
+        <%= link_to 'Add to Portfolio', user_stocks_path(user:current_user,ticker:@stock.ticker), class:"btn btn-primary", method: :post%>
+      </div>
+    <% else %>
+    <div class="card-body row p-2">
+      <p>You are already tracking
+      <% if !current_user.under_ten? %>
+        10 stocks
+      <% elsif current_user.already_tracking?(@stock.ticker)%>
+        <strong><%= @stock.ticker %></strong>
+      <% end %>
+      </p>
+    </div>
+    <% end %>
 
-</div>
-<% else %>
-<div class="col-3 p-0">
-  <%= render "layouts/messages.html.erb"%>
-</div>
+    </div>
+  <% else %>
+    <div class="col-3 p-0">
+      <%= render "layouts/messages.html.erb"%>
+    </div>
 
-<% end %>
+  <% end %>
