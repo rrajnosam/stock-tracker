@@ -1,0 +1,24 @@
+<div class="row p-5">
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @following.each do |f| %>
+      <tr>
+        <th scope="row"><%= f.first_name%></th>
+        <td><%= f.last_name%></td>
+        <td><%= f.email%></td>
+        <td><%= link_to 'Stop following','', method: :delete, class: "btn btn-sm btn-danger"%></td>
+      </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+</div>

@@ -19,8 +19,6 @@ class StocksController < ApplicationController
         flash.now[:alert] = "Please enter a ticker symbol"
         format.js{render partial: "users/results.js.erb"}
       end
-
-
     end
   end
 end

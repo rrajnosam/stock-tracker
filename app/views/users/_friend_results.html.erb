@@ -1,0 +1,32 @@
+<% if @f %>
+  <div class="card col-5 bg-light">
+    <div class="card-body row p-2">
+      <p class="card-text font-weight-bold">Symbol:
+      </p>
+      <%= @f %>
+    </div>
+    <div class="card-body row p-2">
+      <p class="card-text font-weight-bold">Name:
+      </p><%= @f %>
+    </div>
+    <div class="card-body row p-2">
+      <p class="card-text font-weight-bold">Last Price:
+      </p><%= @f %>
+    </div>
+      <div class="card-body row p-2">
+        <%= link_to 'Follow friend', '#', class:"btn btn-primary", method: :post%>
+      </div>
+    <div class="card-body row p-2">
+      <p>You are already tracking
+
+      </p>
+    </div>
+
+
+    </div>
+  <% else %>
+    <div class="col-3 p-0">
+      <%= render "layouts/messages.html.erb"%>
+    </div>
+
+  <% end %>
