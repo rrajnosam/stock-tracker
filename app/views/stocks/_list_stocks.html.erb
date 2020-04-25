@@ -11,14 +11,37 @@
 
     <tbody>
       <% @tracked_stocks.each do |ts| %>
-      <tr>
-        <th scope="row"><%= ts.ticker%></th>
-        <td><%= ts.name%></td>
-        <td><%= ts.last_price%></td>
-        <td><%= link_to 'Remove', user_stock_path(ts), method: :delete, class: "btn btn-sm btn-danger"%></td>
-      </tr>
-      <% end %>
+        <tr>
+          <th scope="row"><%= ts.ticker%></th>
+          <td><%= ts.name%></td>
+          <td><%= ts.last_price%></td>
+          <td>
+            <% if current_user.can_track_stock?(ts.ticker) %>
+              <div class="card-body row p-2">
+                <%= link_to 'Add to Portfolio', user_stocks_path(user:current_user,ticker:ts.ticker), class:"btn btn-primary", method: :post%>
+              </div>
+            <% elsif current_user.id != @user.id %>
+              <div class="card-body row p-2">
+                <p>You are already tracking
+                  <% if !current_user.under_ten? %>
+                    10 stocks
+                    <% elsif current_user.already_tracking?(ts.ticker)%>
+                      <strong><%= ts.ticker %></strong>
+                    <% end %>
+                  </p>
+                </div>
+              <% end %>
 
-    </tbody>
-  </table>
-</div>
+
+            <% if current_user.id == @user.id %>
+
+              <%= link_to 'Remove', user_stock_path(ts), method: :delete, data: {confirm: "are you sure?"},class: "btn btn-sm btn-danger"%>
+
+            <% end %>
+</td>
+          </tr>
+        <% end %>
+
+      </tbody>
+    </table>
+  </div>

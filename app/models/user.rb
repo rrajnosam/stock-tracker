@@ -37,9 +37,18 @@ class User < ApplicationRecord
     end
   end
 
+  def exclude_current_user(array)
+    return array.reject{|user| user.id == self.id}
+  end
+
   def self.search(params)
     params.strip!
-    return (User.email_search(params) + User.first_name_search(params) + User.last_name_search(params)).uniq
+    search_results = (User.email_search(params) + User.first_name_search(params) + User.last_name_search(params)).uniq
+    if search_results
+      return search_results
+    else
+      return nil
+    end
   end
 
   def self.email_search(query)
@@ -56,6 +65,10 @@ class User < ApplicationRecord
 
   def self.match(field_name,query)
     return User.where("#{field_name} like ?", "%#{query}%")
+  end
+
+  def already_following?(friend_id)
+    return self.friends.where(id: friend_id).exists?
   end
 
 end

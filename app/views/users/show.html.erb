@@ -1,33 +1,36 @@
-<% if @query_results %>
-  <% @query_results.each do |friend| %>
+
     <div class="card col-5 mb-2 bg-light">
 
       <div class="card-body row p-2">
         <p class="card-text font-weight-bold">Name:
         </p>
-        <%= friend.full_name %>
+        <%= @user.full_name %>
       </div>
       <div class="card-body row p-2">
         <p class="card-text font-weight-bold">Email:
-        </p><%= friend.email %>
+        </p><%= @user.email %>
       </div>
       <div class="card-body row p-2">
 
-        <%= link_to 'View profile', user_path(friend), class: "btn btn-outline-primary", method: :get%>
+
       </div>
-      <% if current_user.already_following?(friend.id)%>
+      <% if current_user.already_following?(@user.id)%>
         <p class="font-weight-bold">You are already following</p>
       <% else %>
         <div class="card-body row p-2">
-          <%= link_to 'Follow friend', friendships_path(id: friend.id), class:"btn btn-outline-primary", method: :post%>
+          <%= link_to 'Follow friend', friendships_path(id: @user.id), class:"btn btn-outline-primary", method: :post%>
         </div>
       <% end %>
 
     </div>
-  <% end %>
-<% else %>
+
   <div class="col-5 p-0">
     <%= render "layouts/messages.html.erb"%>
   </div>
 
-<% end %>
+  <% if @tracked_stocks.present? %>
+  <%= render 'stocks/list_stocks.html.erb'%>
+  <% else %>
+  <p>This user is not tracking any stocks</p>
+
+  <% end %>
