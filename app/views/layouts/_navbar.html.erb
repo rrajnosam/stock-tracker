@@ -27,9 +27,9 @@
             <%="Edit profile" %>
           <% end %>
           <div class="dropdown-divider"></div>
-          <li class="nav-item">
-          <%= link_to 'Logout',destroy_user_session_path, method: :delete, class:"btn btn-outline-danger" %>
-        </li>
+          <a class="nav-item">
+          <%= link_to 'Logout',destroy_user_session_path, method: :delete %>
+        </a>
           </div>
       </li>
     
